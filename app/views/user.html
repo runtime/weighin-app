@@ -1,0 +1,48 @@
+<div class="row-fluid ">
+  <div class="col-xs-12">
+
+
+    <div class="item">
+      <img class="img-responsive center-block "src="{{currentUser.avatar}}"/>
+      <h1 class="light-blue-text">{{currentUser.name}}</h1>
+      <h1 class="grey-text"><span class="orange-text">{{currentUser.weight}}</span> lbs</h1>
+      <h4 class = "grey-text"> <span class="orange-text">{{currentUser.age}} </span> years old |  <span class="orange-text">{{currentUser.height}}</span> " tall</h4>
+      <!--<h4>Current: {{currentUser.weighins.[weighins.length].weight}}</h4>-->
+      <h4 class="light-blue-text">WeighIns:</h4>
+        <ul>
+          <li ng-repeat="weighin in currentUser.weighins"><i>{{weighin.date | date}}</i>, <span class="orange-text"><b>{{weighin.weight}}lbs</b></span></li>
+        </ul>
+
+      <form>
+        <label for="Weight" class="col-sm-12 control-label">Today's Weight in pounds:</label>
+
+        <div class="form-group">
+          <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+            <input class="form-control" id="weight" type="number" min=”0? step="any"
+                   ng-model="currentUser.weight" placeholder="0"/>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+            <button type="button" class="btn btn-default btn-sm" ng-click="saveUser(currentUser)">Submit</button>
+          </div>
+
+        </div>
+      </form>
+      <!-- chart -->
+      <canvas id="line" class="chart chart-line" chart-data="data"
+              chart-labels="labels" chart-series="series" chart-options="options" chart-colors="colors"
+              chart-dataset-override="datasetOverride" chart-click="onClick">
+      </canvas>
+
+
+      <!-- end chart-->
+
+    </div>
+  </div>
+
+</div>
+
+  </div>
+</div>
+
+
+

@@ -1,0 +1,29 @@
+{
+	"name": "WeighInAppData",
+	"users": [ 
+		{ "name": "Dad",
+		 "age": "50",
+		 "height": "6ft 2in",
+		 "avatar": "http://placekitten.com/g/300/300",
+		  "weighins": [{"date": "11/24/2016", "weight": "224.4"}, {"date": "11/26/2016", "weight": "226.4"}, {"date": "11/27/2016", "weight": "228.2"}]
+		},
+		{ "name": "Chloe",
+		"age": "7",
+		 "height": "4ft 2in",
+		 "avatar": "http://placekitten.com/g/300/300",
+		  "weighins": [{"date": "11/24/2016", "weight": "70.6"}, {"date": "11/26/2016", "weight": "70.8"}, {"date": "11/27/2016", "weight": "70.4"}]
+		},
+		{ "name": "Kaya",
+		"age": "6",
+		 "height": "3ft 10in",
+		 "avatar": "http://placekitten.com/g/300/300",
+		 "weighins": [{"date": "11/24/2016", "weight": "47.6"}, {"date": "11/25/2016", "weight": "43.6"}, {"date": "11/26/2016", "weight": "46.6"}, {"date": "11/27/2016", "weight": "46.8"}]
+		},
+		{ "name": "Mommy",
+		"age": "46",
+		 "height": "5ft 10in",
+		 "avatar": "http://placekitten.com/g/300/300",
+		  "weighins": [{"date": "11/24/2016", "weight": "131.8"}, {"date": "11/26/2016", "weight": "131.1"}, {"date": "11/27/2016", "weight": "131.4"}]
+		}
+	]
+}
