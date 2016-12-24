@@ -14,6 +14,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     <!-- endbuild -->
   </head>
   <body ng-app="weighInApp">
@@ -33,8 +34,12 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
+            <row>
+              <div class="left-block col-xs-4 col-sm-4">  <a class="navbar-brand" href="#/"> <img class="img" src="images/scale-icon-2.png" height="40" width="40"/> </a></div>
+              <div class="right-block col-xs-8 col-sm-8"> <a class="navbar-brand" href="#/"> Weighin </a></div>
 
-            <a class="navbar-brand" href="#/">weighIn</a>
+            </row>
+            <!--<a class="navbar-brand" href="#/"> <img class="img-responsive center-block "src="images/scale-icon-2.png" height="40" width="40"/> Weighin </a>-->
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse" ng-controller="HeadercontrollerCtrl">
@@ -65,7 +70,7 @@
 
     <div class="footer">
       <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team and Firebase</p>
+        <p><span class="glyphicon glyphicon-heart"></span> krobots 2016</p>
       </div>
     </div>
 

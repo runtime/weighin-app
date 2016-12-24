@@ -3,16 +3,42 @@
 
 
     <div class="item">
-      <img class="img-responsive center-block "src="{{currentUser.avatar}}"/>
+      <img class="img-responsive left-block "src="{{currentUser.avatar}}" height="100" width="100"/>
       <h1 class="light-blue-text">{{currentUser.name}}</h1>
       <h1 class="grey-text"><span class="orange-text">{{currentUser.weight}}</span> lbs</h1>
       <h4 class = "grey-text"> <span class="orange-text">{{currentUser.age}} </span> years old |  <span class="orange-text">{{currentUser.height}}</span> " tall</h4>
+      <h4 class = "grey-text"> Start Date:  <span class="orange-text">{{currentUser.start}}</span></h4>
+      <h4 class = "grey-text"> Start Weight:  <span class="orange-text">{{currentUser.startweight}}</span></h4>
       <!--<h4>Current: {{currentUser.weighins.[weighins.length].weight}}</h4>-->
-      <h4 class="light-blue-text">WeighIns:</h4>
-        <ul>
-          <li ng-repeat="weighin in currentUser.weighins"><i>{{weighin.date | date}}</i>, <span class="orange-text"><b>{{weighin.weight}}lbs</b></span></li>
-        </ul>
 
+
+      <!--stats-->
+      <div class = "row-fluid">
+        <div class="col-xs-12">
+
+          <h4 class="grey-text"> target weight: <span class="orange-text">{{currentUser.target}}</span> lbs</h4>
+          <h4 class="grey-text"> pounds lost: <span class="orange-text">{{currentUser.poundslost}}</span> lbs</h4>
+          <h4 class="grey-text"> pounds from target: <span class="orange-text">{{currentUser.pft}}</span> lbs</h4>
+          <h4 class="grey-text"> progress: <span class="orange-text">{{currentUser.progress}}</span>%</h4>
+          <h4 class="grey-text"> all time high: <span class="orange-text">{{currentUser.ath}}</span> lbs</h4>
+          <h4 class="grey-text"> all time low: <span class="orange-text">{{currentUser.atl}}</span> lbs</h4>
+          <h4 class="grey-text"> bmi: <span class="orange-text">{{currentUser.bmi}}</span></h4>
+          <h4 class="grey-text"> weight class: <span class="orange-text">{{currentUser.weightclass}}</span></h4>
+        </div>
+
+
+      </div>
+
+      <!-- chart -->
+      <canvas id="line" class="chart chart-line" chart-data="data"
+              chart-labels="labels" chart-series="series" chart-options="options" chart-colors="colors"
+              chart-dataset-override="datasetOverride" chart-click="onClick">
+      </canvas>
+
+      <!-- end chart-->
+
+
+      <!-- add weighin form-->
       <form>
         <label for="Weight" class="col-sm-12 control-label">Today's Weight in pounds:</label>
 
@@ -27,14 +53,14 @@
 
         </div>
       </form>
-      <!-- chart -->
-      <canvas id="line" class="chart chart-line" chart-data="data"
-              chart-labels="labels" chart-series="series" chart-options="options" chart-colors="colors"
-              chart-dataset-override="datasetOverride" chart-click="onClick">
-      </canvas>
 
 
-      <!-- end chart-->
+
+      <h4 class="light-blue-text">WeighIns:</h4>
+      <ul>
+        <li ng-repeat="weighin in currentUser.weighins"><i>{{weighin.date | date}}</i>, <span class="orange-text"><b>{{weighin.weight}}lbs</b></span></li>
+      </ul>
+
 
     </div>
   </div>

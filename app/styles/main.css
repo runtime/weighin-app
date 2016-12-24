@@ -122,6 +122,31 @@ body {
   color: #e35d0e;
 }
 
+/* bootstrap overrides */
+.navbar-brand > img {
+  margin-top: -7pt;
+}
+
+.navbar {
+  font-family: 'Lobster', cursive;
+}
+
+.jumbotron > h1 {
+  font-family: 'Lobster', cursive;
+}
+
+.jumbotron {
+  margin-bottom: 0px;
+  background-image: url(../images/jumbotronbackground.jpg);
+  background-position: 0% 25%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  /*text-shadow: black 0.3em 0.3em 0.3em;*/
+}
+
+
+
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
