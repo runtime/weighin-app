@@ -59,7 +59,7 @@ yo angularfire:route user --uri=users/:user
       // will be undefined until you click one
       console.log("routeParams.userName: " + $routeParams.userName);
       
-      ## this is set in the userlist view
+     // this is set in the userlist view
       
         <a href="/#/users/{{user.name}}">
         
@@ -69,7 +69,13 @@ yo angularfire:route user --uri=users/:user
               controller: 'UserlistCtrl'
             })
             
-     ## and consumed in the UserlistCtrl
+      // and consumed in the UserlistCtrl
      
         $scope.userName = $routeParams.userName;
+
+  ## TODO
+  Create Target Date
+  Do we have All Time Low calculated?
+  Update UI (sitemap.pdf) to match current App
+  Front End CSS and Media Queries
 
