@@ -49,11 +49,15 @@ angular.module('weighInApp').config(['ChartJsProvider', function (ChartJsProvide
               // Lets get Current Weight too
               angular.forEach(theUser.weighins, function (weighins) {
                 theUser.currentWeight = weighins.weight;
-                theUser.currentDate = weighins.date;
+                theUser.currentDate = new Date(weighins.date);
+                console.log("cd: " + theUser.currentDate);
                 theUser.bmi = $scope.getUserBMI(theUser.height, theUser.weight );
                 theUser.weightclass = $scope.getUserWeightClass(theUser.bmi);
+                // get pounds from target
                 theUser.pft = $scope.roundNum(theUser.currentWeight - theUser.target, 2),
-                // get pft
+                // get days to target
+                theUser.targetdays = $scope.getUpdatedTargetDays($scope.currentUser.targetstartdate, $scope.currentUser.targetenddate);
+
                 $scope.labels.push(theUser.currentDate);
                 $scope.data.push(theUser.currentWeight);
                 //$scope.colors = ["rgba(227,93,14,0.5)","rgba(22,157,255,0.7)","rgba(255,185,0,0.5)"];
@@ -96,13 +100,32 @@ angular.module('weighInApp').config(['ChartJsProvider', function (ChartJsProvide
         });
 
       //methods
+      // ADD USER
       $scope.addUser = function() {
         // Get Date and Time
-        var currentDate =  new Date();
-        var date =  currentDate.toLocaleDateString();
-        var time =  currentDate.toLocaleTimeString();
-        $scope.currentTime = String(date + " " + time);
-        //console.log($scope.currentTime);
+
+      /*  var currentDate =  new Date();
+        var dd = currentDate.getDate();
+        var mm = currentDate.getMonth()+1; //January is 0!
+        var yyyy = currentDate.getFullYear();
+        if(dd<10) {
+          dd='0'+dd
+        }
+        if(mm<10) {
+          mm='0'+mm
+        }
+        currentDate = yyyy+'/'+mm+'/'+dd;*/
+
+
+       // $scope.date =  currentDate.toLocaleDateString();
+      //  $scope.time =  currentDate.toLocaleTimeString();
+       // $scope.currentTime = String($scope.date + " " + $scope.time);
+
+
+        //NEW DATE
+        var currentDate =  new Date()
+        $scope.currentTime = currentDate;
+        console.log($scope.currentTime);
         // Set the BMI
 
         $scope.user.bmi = $scope.getUserBMI($scope.user.height, $scope.user.weight );
@@ -121,32 +144,36 @@ angular.module('weighInApp').config(['ChartJsProvider', function (ChartJsProvide
             poundslost: Number(0),
             pft: $scope.roundNum($scope.user.weight - $scope.user.target, 2),
             spft: $scope.roundNum($scope.user.weight - $scope.user.target, 2),
-            start: $scope.currentTime,
+            startdate: String($scope.currentTime),
+            targetstartdate: String($scope.currentTime),
+            targetdays: $scope.user.daystotarget,
+            targetenddate: String($scope.getTargetEndDate($scope.user.daystotarget)),
             bmi: $scope.user.bmi,
             weightclass: $scope.user.weightclass,
             avatar: $scope.user.avatar,
-            weighins:[{date: $scope.currentTime , weight: $scope.user.weight}]
+            weighins:[{date: String($scope.currentTime) , weight: $scope.user.weight}]
         });
 
         $location.path('/userlist');
-      }
+      };
 
+      // REMOVE USER
       $scope.removeUser = function (obj) {
       // console.log("removeUser: " + obj.$id);
          $scope.users.$remove(obj);
-      }
+      };
 
+      // SAVE USER
       $scope.saveUser = function (obj) {
 
         var currentDate =  new Date();
-        var date =  currentDate.toLocaleDateString();
-        var time =  currentDate.toLocaleTimeString();
-        $scope.currentTime = String(date + " " + time);
+        $scope.currentTime = currentDate;
+        //$scope.currentTime = String($scope.date + " " + $scope.time);
         //console.log($scope.currentTime);
 
         var currentWeighin = {
-          date: $scope.currentTime, weight: obj.weight
-        }
+          date: String($scope.currentTime), weight: obj.weight
+        };
 
         if ($scope.currentUser.$id == obj.$id) {
             $scope.currentUser.weighins.push(currentWeighin);
@@ -162,18 +189,22 @@ angular.module('weighInApp').config(['ChartJsProvider', function (ChartJsProvide
           if($scope.currentUser.progress < 0) {$scope.currentUser.progress = 0};
           $scope.currentUser.bmi =  $scope.getUserBMI($scope.currentUser.height, $scope.currentUser.weight);
           $scope.currentUser.weightclass = $scope.getUserWeightClass($scope.currentUser.bmi);
+          $scope.currentUser.targetdays = $scope.getUpdatedTargetDays($scope.currentUser.targetstartdate, $scope.currentUser.targetenddate);
+
 
           // update chart
-            $scope.labels.push($scope.currentTime);
+            $scope.labels.push(String($scope.currentTime));
             $scope.data.push(obj.weight);
           // Save to Firebase
             $scope.users.$save($scope.currentUser)
-            //console.log("saveuser: currentUser.weighins: " + $scope.currentUser.weighins);
+            console.log("saveuser: currentUser.weighins: " + $scope.currentUser.weighins);
         } else {
             console.log('error');
         }
 
-      }
+      };
+
+      // COMMON
 
       $scope.getUserBMI = function(h,w) {
         // metric conversion for weight
@@ -186,7 +217,7 @@ angular.module('weighInApp').config(['ChartJsProvider', function (ChartJsProvide
         return $scope.bmi;
 
 
-      }
+      };
 
       $scope.getUserWeightClass = function(n) {
 
@@ -219,13 +250,26 @@ angular.module('weighInApp').config(['ChartJsProvider', function (ChartJsProvide
           return;
         }
 
-      }
+      };
 
       $scope.roundNum = function (value, decimals) {
           return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+      };
 
+      $scope.getTargetEndDate = function (num) {
+        var days = num;
+        var dat = new Date();
+        dat.setDate(dat.getDate() + days);
+        return dat;
       }
 
+      $scope.getUpdatedTargetDays = function (date1, date2) {
+        var dat1 = new Date(date1);
+        var dat2 = new Date(date2);
+        var timeDiff = Math.abs(dat2.getTime() - dat1.getTime());
+        $scope.dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        return $scope.dayDifference;
+      }
 
 
 
